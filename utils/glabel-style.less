@@ -1,0 +1,22 @@
+// 超出一行显示省略号
+.text-oneline {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+// 主题函数
+.theme (@background,@textColor,@actionColor) {
+	background: @background;
+	color: @textColor;
+	.action-color {
+		color: @actionColor;
+	}
+}
+// 深色主题
+.dark-theme {
+	.theme(#464646, #eaeaea, #fff );
+}
+// 浅色主题
+.light-theme {
+	.theme(#fff, #464646, #333 );
+}

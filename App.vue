@@ -1,23 +1,27 @@
 <script>
 export default {
-	onLaunch: function() {
-		console.log('App Launch');
-	},
-	onShow: function() {
-		console.log('App Show');
-	},
-	onHide: function() {
-		console.log('App Hide');
-	}
-};
-</script>
-
-<style>
-/* 解决头条小程序组件内引入字体不生效的问题 */
-/* #ifdef MP-TOUTIAO */
-@font-face {
-	font-family: uniicons;
-	src: url('/static/uni.ttf');
+    // 当应用首次打开时调用，只调用一次
+    onLaunch: function () {
+        // 添加主题类名
+        document.body.classList.add('light-theme')
+    },
+    // 当引用显示时调用
+    onShow: function () {
+        console.log('App Show')
+    },
+    // 当引用隐藏时调用
+    onHide: function () {
+        console.log('App Hide')
+    },
 }
-/* #endif */
+</script>
+<style lang="less">
+// 全局样式文件
+@import url('./utils/glabel-style.less');
+// 图标库
+@import url('./iconfont/less/font-awesome.less');
+.uni-body {
+    // 全局默认字体大小，默认16px，使用的是rpx所以是32rpx
+    font-size: 32rpx;
+}
 </style>
