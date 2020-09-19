@@ -10,7 +10,7 @@ export default {
         queryNavbar,
     },
     onShow: function() {
-        console.log(getApp().globalData)
+        
     }
 }
 </script>

@@ -29,7 +29,6 @@ export default {
     },
 
     onLoad() {
-        console.log('asdasdsdads--load')
     },
 
     onShow() {
