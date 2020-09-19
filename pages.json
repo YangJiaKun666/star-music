@@ -2,6 +2,9 @@
     "pages": [
         {
             "path": "pages/home/index"
+        },      
+		{
+            "path": "pages/play/index"
         }
     ],
     "globalStyle": {
