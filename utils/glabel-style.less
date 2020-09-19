@@ -1,27 +1,41 @@
 // 超出一行显示省略号
 .text-oneline {
-	text-overflow: ellipsis;
-	overflow: hidden;
-	white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 // 主题函数
 .theme (@background,@textColor,@actionColor) {
-	background: @background;
-	color: @textColor;
-	.action-color {
-		color: @actionColor;
-	}
+    background: @background;
+    color: @textColor;
+    .action-color {
+        color: @actionColor;
+    }
 }
 // 深色主题
 .dark-theme {
-	.theme(#464646, #eaeaea, #fff );
+    .theme(#464646, #eaeaea, #fff );
 }
 // 浅色主题
 .light-theme {
-	.theme(#fff, #464646, #333 );
+    .theme(#fff, #464646, #000 );
 }
 // flex
 .flex-center {
-	display: flex;
-	align-items: center;
+    display: flex;
+    align-items: center;
+}
+
+// transition动画
+.sigin-signup-enter,
+.sigin-signup-leave-to {
+    opacity: 0;
+}
+.sigin-signup-enter-to,
+.sigin-signup-leave {
+    opacity: 1;
+}
+.sigin-signup-enter-active,
+.sigin-signup-leave-active {
+    transition-duration: 0.2s;
 }

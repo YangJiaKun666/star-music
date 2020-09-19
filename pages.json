@@ -1,10 +1,19 @@
 {
     "pages": [
         {
+            "path": "pages/login/index"
+        },
+        {
             "path": "pages/home/index"
         }
     ],
     "globalStyle": {
         "navigationStyle": "custom"
+    },
+    "style": {
+        "app-plus": {
+            "animationType": "fade-in",
+            "animationDuration": 300
+        }
     }
 }

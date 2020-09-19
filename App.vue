@@ -22,6 +22,6 @@ export default {
 @import url('./iconfont/less/font-awesome.less');
 .uni-body {
     // 全局默认字体大小，默认16px，使用的是rpx所以是32rpx
-    font-size: 32rpx;
+    font-size: 28rpx;
 }
 </style>
