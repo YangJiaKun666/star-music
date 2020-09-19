@@ -22,7 +22,7 @@
 </template>
 <script>
 import starIcon from '@/components/star-icon'
-import helangBlur from "@/components/helang-blur/helang-blur.vue"
+import helangBlur from "@/components/helang-blur.vue"
 
 export default {
     components: {
