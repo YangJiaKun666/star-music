@@ -41,7 +41,7 @@ export default {
 		}
 	},
 	 onLoad: function () {
-		alert(getApp().globalData.windowHeight)
+		// alert(getApp().globalData.windowHeight)
 	 }
 }
 </script>
