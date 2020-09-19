@@ -23,17 +23,15 @@ export default {
     data() {
         return {
             isShow: false,
-            windowHeight: 0,
+            windowHeight: getApp().globalData.windowHeight,
             timer: null,
         }
     },
+
     onLoad() {
-        uni.getSystemInfo({
-            success: (res) => {
-                this.windowHeight = res.windowHeight
-            },
-        })
+        console.log('asdasdsdads--load')
     },
+
     onShow() {
         this.timer = setTimeout(() => {
             this.isShow = true

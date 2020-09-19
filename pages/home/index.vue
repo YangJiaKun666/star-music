@@ -9,5 +9,8 @@ export default {
     components: {
         queryNavbar,
     },
+    onShow: function() {
+        console.log(getApp().globalData)
+    }
 }
 </script>

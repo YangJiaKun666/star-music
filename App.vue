@@ -3,16 +3,15 @@ export default {
 	globalData: {  
 		statusBar: null,
 		customBar: null,
-		windowHeight: null
+        windowHeight: null,
+        windowWidth: null
 	},  
     // 当应用首次打开时调用，只调用一次
     onLaunch: function () {
-        // 添加主题类名
-        document.body.classList.add('light-theme')
-		
 		//设置全局屏幕高度
 		const { windowWidth, windowHeight } = uni.getSystemInfoSync();
 		getApp().globalData.windowHeight = windowHeight
+		getApp().globalData.windowWidth = windowWidth
 		
 		//设置全局状态栏高度
 		uni.getSystemInfo({
@@ -78,13 +77,4 @@ export default {
 @import url('./utils/glabel-style.less');
 // 图标库
 @import url('./iconfont/less/font-awesome.less');
-.uni-body {
-    // 全局默认字体大小，默认16px，使用的是rpx所以是32rpx
-    font-size: 28rpx;
-}
-.uni-page-body{
-	height: 100%;
-	background-color: red;
-}	
-
 </style>
