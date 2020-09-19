@@ -37,19 +37,27 @@
                     transform: `translateX(-${transform}px)`,
                     transitionDuration: duration + 'ms',
                 }"
-                v-for="item in navBar"
-                :key="item.key"
+                v-for="(item, index) in navBar"
+                :key="index"
             >
-                {{ item.label }}
+                <component :is="item.componentName" />
             </view>
         </view>
     </view>
 </template>
 <script>
 import starIcon from '@/components/star-icon'
+import homeMyed from './components/myed'
+import homeFind from './components/find'
+import homeTop from './components/top'
+import homeVideos from './components/videos'
 export default {
     components: {
         starIcon,
+        homeMyed,
+        homeFind,
+        homeTop,
+        homeVideos,
     },
     data() {
         return {
@@ -59,10 +67,10 @@ export default {
             duration: 300,
             currentKey: 1,
             navBar: [
-                { label: '我的', key: 'myed' },
-                { label: '发现', key: 'find' },
-                { label: '排行榜', key: 'top' },
-                { label: '视频', key: 'mv' },
+                { label: '我的', componentName: 'home-myed' },
+                { label: '发现', componentName: 'home-find' },
+                { label: '排行榜', componentName: 'home-top' },
+                { label: '视频', componentName: 'home-videos' },
             ],
             moveStart: 0,
             moveIng: 0,
@@ -149,6 +157,7 @@ export default {
         .query-box {
             width: 100%;
             flex-shrink: 0;
+            overflow-y: auto;
         }
     }
 }
