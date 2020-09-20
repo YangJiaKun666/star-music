@@ -31,17 +31,20 @@
             @touchmove="onMove"
             @touchend="onEnd"
         >
-            <view
-                class="query-box"
+            <component
                 :style="{
                     transform: `translateX(-${transform}px)`,
                     transitionDuration: duration + 'ms',
+                    height: '100%',
+                    width: '100%',
+                    flexShrink: '0',
+                    overflowY: 'auto',
+                    boxSizing: 'border-box'
                 }"
                 v-for="(item, index) in navBar"
                 :key="index"
-            >
-                <component :is="item.componentName" />
-            </view>
+                :is="item.componentName"
+            />
         </view>
     </view>
 </template>
@@ -50,14 +53,12 @@ import starIcon from '@/components/star-icon'
 import homeMyed from './components/myed'
 import homeFind from './components/find'
 import homeTop from './components/top'
-import homeVideos from './components/videos'
 export default {
     components: {
         starIcon,
         homeMyed,
         homeFind,
         homeTop,
-        homeVideos,
     },
     data() {
         return {
@@ -70,8 +71,8 @@ export default {
                 { label: '我的', componentName: 'home-myed' },
                 { label: '发现', componentName: 'home-find' },
                 { label: '排行榜', componentName: 'home-top' },
-                { label: '视频', componentName: 'home-videos' },
             ],
+            stop: false,
             moveStart: 0,
             moveIng: 0,
         }
@@ -104,6 +105,7 @@ export default {
         },
         // 手指滑动距离
         onMove(event) {
+            if (this.stop) return
             let move = event.touches[0].clientX
             if (this.moveStart - move > 50 || this.moveStart - move < -50) {
                 this.moveIng = this.moveStart - move
@@ -136,10 +138,10 @@ export default {
         .navbar-tab {
             width: calc(100% - 180rpx);
             height: 100%;
-            padding: 0 30rpx;
+            padding: 0 50rpx;
             box-sizing: border-box;
             .tab-box {
-                width: calc(100% / 4);
+                width: calc(100% / 3);
                 text-align: center;
                 transition-duration: 0.2s;
             }
@@ -151,14 +153,10 @@ export default {
     }
     .query-container {
         display: flex;
+        align-items: flex-start;
         flex-wrap: nowrap;
         width: 100%;
         overflow-x: hidden;
-        .query-box {
-            width: 100%;
-            flex-shrink: 0;
-            overflow-y: auto;
-        }
     }
 }
 </style>

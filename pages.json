@@ -5,8 +5,11 @@
         },
         {
             "path": "pages/home/index"
-        },      
-		{
+        },
+        {
+            "path": "pages/sheet-list/index"
+        },
+        {
             "path": "pages/play/index"
         }
     ],

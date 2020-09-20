@@ -52,7 +52,5 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: rgba(225, 225, 225, 0.1);
-    backdrop-filter: blur(14px);
 }
 </style>
