@@ -1,17 +1,27 @@
 <template>
     <view class="song-item flex-center">
         <view class="item-image">
-            <image
-                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600593719746&di=af8ac6c88ad848d28d80deb97db7e539&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117230425_eofqv.thumb.700_0.jpg"
-            />
+            <image :src="item.picUrl" />
         </view>
         <view class="item-info">
-            <view class="info-title text-oneline action-color"
-                >歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称歌曲名称</view
-            >
-            <view class="info-name text-oneline"
-                >歌手信息歌手信息歌手信息歌手信息歌手信息歌手信息</view
-            >
+            <view class="info-title text-oneline">
+                <text class="action-color">{{ item.name }}</text>
+                <text>{{
+                    item.song.alias[0] ? `（${item.song.alias[0]}）` : ''
+                }}</text>
+            </view>
+            <view class="info-name text-oneline">
+                <text
+                    v-for="(songer, index) of item.song.artists"
+                    :key="index"
+                    >{{
+                        `${songer.name}${
+                            index !== item.song.artists.length - 1 ? '/' : ' - '
+                        }`
+                    }}</text
+                >
+                <text>{{ item.song.album.name }}</text>
+            </view>
         </view>
         <view class="item-icon">
             <star-icon name="play-circle" size="60" />
@@ -21,6 +31,14 @@
 <script>
 import starIcon from '@/components/star-icon'
 export default {
+    props: {
+        item: {
+            type: Object,
+            default: () => {
+                return {}
+            },
+        },
+    },
     components: {
         starIcon,
     },
@@ -28,7 +46,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .song-item {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     height: 100rpx;
     width: 100%;
     .item-image {

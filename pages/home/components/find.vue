@@ -1,5 +1,5 @@
 <template>
-    <view class="find-item">
+    <scroll-view scroll-y class="find-item">
         <!-- 轮播图 -->
         <swiper
             class="swiper-box"
@@ -8,12 +8,11 @@
             circular
             indicator-dots
         >
-            <swiper-item v-for="(item, index) in info" :key="index">
+            <swiper-item v-for="(item, index) in bannerData" :key="index">
                 <image
-                    @click="selectDetail(item)"
+                    @click="selectDetail(item.targetId)"
                     class="swiper-item"
-                    :src="item"
-                    mode="aspectFill"
+                    :src="item.pic"
                 />
             </swiper-item>
         </swiper>
@@ -63,43 +62,59 @@
         <!-- 歌单推荐 -->
         <star-title title="懂你的精选歌单" buttonLabel="查看更多" />
         <view class="recommend flex-center">
-            <star-song-sheet v-for="(item, index) of 6" :key="index" />
+            <star-song-sheet
+                v-for="(item, index) of sheetData"
+                :item="item"
+                :key="index"
+            />
         </view>
         <!-- 歌曲推荐 -->
         <star-title title="精选歌曲，值得聆听" buttonLabel="全部播放" />
         <view>
-            <star-song-item v-for="(item, index) of 6" :key="index" />
+            <star-song-item
+                v-for="(item, index) of songData"
+                :item="item"
+                :key="index"
+            />
         </view>
-    </view>
+    </scroll-view>
 </template>
 <script>
 import starIcon from '@/components/star-icon'
 import starTitle from '@/components/star-title'
 import starSongSheet from '@/components/star-song-sheet'
 import starSongItem from '@/components/star-song-item'
-import starVideo from '@/components/star-video'
+import apis from '@/apis/index'
 export default {
     components: {
         starIcon,
         starSongSheet,
         starTitle,
         starSongItem,
-        starVideo,
+    },
+    props: {
+        isRendering: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
-            info: [
-                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600592455688&di=e68f4dc72bfce47737ffd1e45d14381b&imgtype=0&src=http%3A%2F%2Fpic.3h3.com%2Fup%2F2016-11%2F20161118163145985980.jpg',
-                'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600592521576&di=2c109ca996a161273455609c3f192e54&imgtype=0&src=http%3A%2F%2F01.minipic.eastday.com%2F20170928%2F20170928112618_d41d8cd98f00b204e9800998ecf8427e_6.jpeg',
-                'https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1524344612,772100959&fm=26&gp=0.jpg',
-            ],
+            bannerData: [],
+            sheetData: [],
+            songData: [],
         }
     },
-    computed: {
-        translate() {
-            console.log(this.prevMove, this.recomMove)
-            return this.prevMove + this.recomMove
-        },
+    async mounted() {
+        // 获取轮播图
+        let bannerRes = await apis.getFindBannerData({ type: 1 })
+        this.bannerData = bannerRes.banners
+        // 获取推荐歌单
+        let recommendRes = await apis.getFindRecommendData({ limit: 6 })
+        this.sheetData = recommendRes.result
+        // 获取推荐歌曲
+        let songRes = await apis.getFindSongData()
+        this.songData = songRes.result
     },
     methods: {
         selectDetail(item) {

@@ -1,31 +1,50 @@
 <template>
     <!-- 歌单组件 -->
-    <view class="song-sheet" :style="{ width: boxWidth + 'px' }">
+    <view
+        class="song-sheet"
+        :style="{ width: boxWidth + 'px' }"
+        @click="goSheetDetail(item.id)"
+    >
         <!-- 播放量 -->
         <view class="play-count">
             <star-icon :style="{ marginRight: '8rpx' }" name="play" size="18" />
-            <text>232万</text>
+            <text>{{ item.playCount }}</text>
         </view>
         <!-- 图片 -->
-        <image
-            class="sheet-img"
+        <view
             :style="{ width: boxWidth + 'px', height: boxWidth + 'px' }"
-            src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600593719746&di=af8ac6c88ad848d28d80deb97db7e539&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117230425_eofqv.thumb.700_0.jpg"
-        />
+            class="sheet-img"
+        >
+            <image lazy-load :src="item.picUrl" />
+        </view>
         <!-- 标题 -->
         <view class="sheet-title text-towline">
-            哈哈哈哈黑暗时代库哈斯了爱上了回到拉萨
+            {{ item.name }}
         </view>
     </view>
 </template>
 <script>
 import starIcon from './star-icon'
+import { mapState } from 'vuex'
 export default {
+    props: {
+        item: {
+            type: Object,
+            default: () => {
+                return {}
+            },
+        },
+    },
     components: { starIcon },
-    data() {
-        return {
-            boxWidth: (getApp().globalData.windowWidth - 24) / 3 - 6,
-        }
+    computed: {
+        boxWidth() {
+            return (this.$store.state.windowWidth - 24) / 3 - 6
+        },
+    },
+    methods: {
+        goSheetDetail(id) {
+            console.log(id)
+        },
     },
 }
 </script>
@@ -35,15 +54,26 @@ export default {
     position: relative;
     margin-bottom: 24rpx;
     .play-count {
+        width: 100%;
         position: absolute;
         z-index: 1;
         top: 4rpx;
-        right: 10rpx;
+        left: 0;
         font-size: 20rpx;
         color: #fff;
+        text-align: right;
+        padding: 2rpx 10rpx 2rpx 0;
+        box-sizing: border-box;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 12rpx 12rpx 0 0;
     }
     .sheet-img {
         border-radius: 12rpx;
+        overflow: hidden;
+        image {
+            width: 100%;
+            height: 100%;
+        }
     }
     .sheet-title {
         line-height: 34rpx;

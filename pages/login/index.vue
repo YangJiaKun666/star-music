@@ -16,6 +16,7 @@
 </template>
 <script>
 import signIn from './components/sign-in'
+import { mapState } from 'vuex'
 export default {
     components: {
         signIn,
@@ -23,13 +24,15 @@ export default {
     data() {
         return {
             isShow: false,
-            windowHeight: getApp().globalData.windowHeight,
             timer: null,
         }
     },
 
-    onLoad() {
+    computed: {
+        ...mapState(['windowHeight']),
     },
+
+    onLoad() {},
 
     onShow() {
         this.timer = setTimeout(() => {

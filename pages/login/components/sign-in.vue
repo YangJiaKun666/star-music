@@ -23,6 +23,8 @@
 <script>
 import starInput from '@/components/star-input.vue'
 import starButton from '@/components/star-button.vue'
+import apis from '@/apis/index'
+import md5 from '@/utils/md5'
 export default {
     components: {
         starInput,
@@ -35,10 +37,38 @@ export default {
         }
     },
     methods: {
-        goHome() {
-            uni.redirectTo({
-                url: '/pages/home/index',
+        async goHome() {
+            if (!this.phoneNumber)
+                return uni.showToast({
+                    title: '请输入手机号',
+                    icon: 'none',
+                })
+            let loginRes = await apis.loginByPhoneNumber({
+                phone: this.phoneNumber,
+                md5_password: md5.hex_md5(this.password),
             })
+            if (loginRes.code !== 200) {
+                uni.showToast({
+                    title: loginRes.message,
+                    icon: 'none',
+                })
+            } else {
+                uni.showToast({
+                    title: '登录成功',
+                    icon: 'success',
+                }).then(() => {
+                    this.$store.commit('setUserInfo', {
+                        cookie: loginRes.cookie,
+                        token: loginRes.token,
+                        ...loginRes.profile,
+                    })
+                    setTimeout(() => {
+                        uni.redirectTo({
+                            url: '/pages/home/index',
+                        })
+                    }, 1500)
+                })
+            }
         },
     },
 }

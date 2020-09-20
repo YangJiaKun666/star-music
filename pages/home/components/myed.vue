@@ -1,5 +1,5 @@
 <template>
-    <view class="myed-item">
+    <scroll-view scroll-y class="myed-item">
         <!-- 顶部用户信息 -->
         <view class="top-userinfo flex-center">
             <image
@@ -65,7 +65,7 @@
                 </view>
             </view>
         </view>
-    </view>
+    </scroll-view>
 </template>
 <script>
 import starIcon from '@/components/star-icon'

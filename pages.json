@@ -14,7 +14,8 @@
         }
     ],
     "globalStyle": {
-        "navigationStyle": "custom"
+        "navigationStyle": "custom",
+        "navigationBarTextStyle": "black"
     },
     "style": {
         "app-plus": {

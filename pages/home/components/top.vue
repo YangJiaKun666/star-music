@@ -1,3 +1,3 @@
 <template>
-    <view>this is top page</view>
+    <scroll-view scroll-y>this is top page</scroll-view>
 </template>

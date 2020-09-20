@@ -1,66 +1,66 @@
 <script>
 export default {
-	globalData: {  
-		statusBar: null,
-		customBar: null,
-        windowHeight: null,
-        windowWidth: null
-	},  
     // 当应用首次打开时调用，只调用一次
     onLaunch: function () {
-		//设置全局屏幕高度
-		const { windowWidth, windowHeight } = uni.getSystemInfoSync();
-		getApp().globalData.windowHeight = windowHeight
-		getApp().globalData.windowWidth = windowWidth
-		
-		//设置全局状态栏高度
-		uni.getSystemInfo({
-		    success: e => {
-		      // this.compareVersion(e.SDKVersion, '2.5.0')
-		      let statusBar = 0
-		      let customBar = 0
-		      
-		      
-		      // #ifdef MP
-		      statusBar = e.statusBarHeight
-		      customBar = e.statusBarHeight + 45
-		      if (e.platform === 'android') {
-		        this.$store.commit('SET_SYSTEM_IOSANDROID', false)
-		        customBar = e.statusBarHeight + 50
-		      }
-		      // #endif
-		      
-		      
-		      // #ifdef MP-WEIXIN
-		      statusBar = e.statusBarHeight
-		      // @ts-ignore
-		      const custom = wx.getMenuButtonBoundingClientRect()
-		      customBar = custom.bottom + custom.top - e.statusBarHeight
-		      // #endif
-		
-		
-		      // #ifdef MP-ALIPAY
-		      statusBar = e.statusBarHeight
-		      customBar = e.statusBarHeight + e.titleBarHeight
-		      // #endif
-		
-		
-		      // #ifdef APP-PLUS
-		      console.log('app-plus', e)
-		      statusBar = e.statusBarHeight
-		      customBar = e.statusBarHeight + 45
-		      // #endif
-		
-		
-		      // #ifdef H5
-		      statusBar = 0
-		      customBar = e.statusBarHeight + 45
-		      // #endif
-			  getApp().globalData.customBar = customBar
-			  getApp().globalData.statusBar = statusBar
+        //设置全局屏幕高度
+        const { windowWidth, windowHeight } = uni.getSystemInfoSync()
+        //设置全局状态栏高度
+        uni.getSystemInfo({
+            success: (e) => {
+                // this.compareVersion(e.SDKVersion, '2.5.0')
+                let statusBar = 0
+                let customBar = 0
 
-		    }
-		})
+                // #ifdef MP
+                statusBar = e.statusBarHeight
+                customBar = e.statusBarHeight + 45
+                if (e.platform === 'android') {
+                    this.$store.commit('SET_SYSTEM_IOSANDROID', false)
+                    customBar = e.statusBarHeight + 50
+                }
+                // #endif
+
+                // #ifdef MP-WEIXIN
+                statusBar = e.statusBarHeight
+                // @ts-ignore
+                const custom = wx.getMenuButtonBoundingClientRect()
+                customBar = custom.bottom + custom.top - e.statusBarHeight
+                // #endif
+
+                // #ifdef MP-ALIPAY
+                statusBar = e.statusBarHeight
+                customBar = e.statusBarHeight + e.titleBarHeight
+                // #endif
+
+                // #ifdef APP-PLUS
+                console.log('app-plus', e)
+                statusBar = e.statusBarHeight
+                customBar = e.statusBarHeight + 45
+                // #endif
+
+                // #ifdef H5
+                statusBar = 0
+                customBar = e.statusBarHeight + 45
+                // #endif
+                this.$store.commit('getSystemInfo', {
+                    statusBar,
+                    customBar,
+                    windowWidth,
+                    windowHeight,
+                })
+                // 取出用户信息，如果不存在曾视为未登录
+                let userInfo = this.$store.state.userInfo
+                if (!userInfo) {
+                    uni.redirectTo({
+                        url: '/pages/login/index',
+                    })
+                } else {
+                    uni.redirectTo({
+                        url: '/pages/home/index',
+                    })
+                }
+            },
+        })
     },
     // 当引用显示时调用
     onShow: function () {
@@ -74,7 +74,7 @@ export default {
 </script>
 <style lang="less">
 // 全局样式文件
-@import url('./utils/glabel-style.less');
+@import url('@/utils/glabel-style.less');
 // 图标库
-@import url('./iconfont/less/font-awesome.less');
+@import url('@/iconfont/less/font-awesome.less');
 </style>

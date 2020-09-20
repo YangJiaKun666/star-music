@@ -41,6 +41,7 @@
                     overflowY: 'auto',
                     boxSizing: 'border-box',
                 }"
+                :isRendering="currentKey === index"
                 v-for="(item, index) in navBar"
                 :key="index"
                 :is="item.componentName"
@@ -53,6 +54,7 @@ import starIcon from '@/components/star-icon'
 import homeMyed from './components/myed'
 import homeFind from './components/find'
 import homeTop from './components/top'
+import { mapState } from 'vuex'
 export default {
     components: {
         starIcon,
@@ -62,9 +64,6 @@ export default {
     },
     data() {
         return {
-            statusBar: getApp().globalData.statusBar,
-            windowHeight: getApp().globalData.windowHeight,
-            windowWidth: getApp().globalData.windowWidth,
             duration: 300,
             currentKey: 1,
             navBar: [
@@ -72,12 +71,12 @@ export default {
                 { label: '发现', componentName: 'home-find' },
                 { label: '排行榜', componentName: 'home-top' },
             ],
-            stop: false,
             moveStart: 0,
             moveIng: 0,
         }
     },
     computed: {
+        ...mapState(['statusBar', 'windowHeight', 'windowWidth']),
         transform() {
             let num = this.currentKey * this.windowWidth + this.moveIng
             let total = (this.navBar.length - 1) * this.windowWidth
@@ -105,11 +104,8 @@ export default {
         },
         // 手指滑动距离
         onMove(event) {
-            if (this.stop) return
             let move = event.touches[0].clientX
-            if (this.moveStart - move > 50 || this.moveStart - move < -50) {
-                this.moveIng = this.moveStart - move
-            }
+            this.moveIng = this.moveStart - move
         },
         // 手指滑动结束
         onEnd(event) {
