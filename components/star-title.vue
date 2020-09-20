@@ -1,7 +1,7 @@
 <template>
     <view class="title-box flex-center">
         <view class="title-text action-color">{{ title }}</view>
-        <view class="select-more border-line" @click="$emit('button-click')">{{
+        <view class="select-more border-line" v-if="buttonLabel" @click="$emit('button-click')">{{
             buttonLabel
         }}</view>
     </view>

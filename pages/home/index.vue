@@ -39,7 +39,7 @@
                     width: '100%',
                     flexShrink: '0',
                     overflowY: 'auto',
-                    boxSizing: 'border-box'
+                    boxSizing: 'border-box',
                 }"
                 v-for="(item, index) in navBar"
                 :key="index"
