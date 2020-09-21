@@ -13,7 +13,7 @@ export function httpRequest(url, method, data) {
                     resolve(res.data)
                 } else {
                     uni.redirectTo({
-                        url: '/pages/home/index',
+                        url: '/pages/login/index',
                     })
                 }
             },

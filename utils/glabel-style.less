@@ -69,3 +69,23 @@ body /deep/ .uni-scroll-view::-webkit-scrollbar {
 .sigin-signup-leave-active {
     transition-duration: 0.2s;
 }
+
+// 按钮激活时
+.button-action {
+    position: relative;
+}
+.button-action::after {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    transition-duration: 200ms;
+}
+.button-action:active::after {
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 20rpx;
+}

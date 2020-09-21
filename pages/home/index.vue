@@ -2,7 +2,7 @@
     <view class="query-content" :style="{ height: windowHeight + 'px' }">
         <view class="query-navbar" :style="{ paddingTop: statusBar + 'px' }">
             <!-- 首页navbar左侧图标 -->
-            <view class="navbar-icon flex-center">
+            <view class="navbar-icon button-action flex-center">
                 <starIcon name="bars" size="32" />
             </view>
             <!-- 首页navbar中间tab -->
@@ -10,6 +10,7 @@
                 <view
                     :class="[
                         'tab-box',
+                        'button-action',
                         currentKey === index && ['action-color', 'tab-action'],
                     ]"
                     v-for="(item, index) in navBar"
@@ -20,7 +21,7 @@
                 </view>
             </view>
             <!-- 首页navbar有侧图标 -->
-            <view class="navbar-icon flex-center">
+            <view class="navbar-icon button-action flex-center">
                 <starIcon name="search" size="32" />
             </view>
         </view>
@@ -126,6 +127,7 @@ export default {
     .query-navbar {
         height: 90rpx;
         display: flex;
+        align-items: center;
         .navbar-icon {
             width: 90rpx;
             height: 90rpx;
@@ -138,6 +140,7 @@ export default {
             box-sizing: border-box;
             .tab-box {
                 width: calc(100% / 3);
+                line-height: 90rpx;
                 text-align: center;
                 transition-duration: 0.2s;
             }

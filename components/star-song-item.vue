@@ -1,5 +1,5 @@
 <template>
-    <view class="song-item flex-center">
+    <view class="song-item flex-center button-action">
         <view class="item-image">
             <image :src="item.picUrl" />
         </view>
@@ -49,6 +49,7 @@ export default {
     margin-bottom: 14px;
     height: 100rpx;
     width: 100%;
+    position: relative;
     .item-image {
         height: 100rpx;
         width: 100rpx;

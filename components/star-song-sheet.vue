@@ -8,7 +8,7 @@
         <!-- 播放量 -->
         <view class="play-count">
             <star-icon :style="{ marginRight: '8rpx' }" name="play" size="18" />
-            <text>{{ item.playCount }}</text>
+            <text>{{ getPlayCount(item.playCount) }}</text>
         </view>
         <!-- 图片 -->
         <view
@@ -44,6 +44,27 @@ export default {
     methods: {
         goSheetDetail(id) {
             console.log(id)
+        },
+        getPlayCount(number) {
+            if (!number) return 0
+            number = String(number)
+            let playStr = ''
+            switch (number.length) {
+                case 5:
+                    return (playStr = `${number.slice(0, 1)}万`)
+                case 6:
+                    return (playStr = `${number.slice(0, 2)}万`)
+                case 7:
+                    return (playStr = `${number.slice(0, 3)}万`)
+                case 8:
+                    return (playStr = `${number.slice(0, 4)}万`)
+                case 9:
+                    return (playStr = `${number.slice(0, 1)}亿`)
+                case 10:
+                    return (playStr = `${number.slice(0, 2)}亿`)
+                default:
+                    return (playStr = 0)
+            }
         },
     },
 }
