@@ -42,7 +42,7 @@
                     >
                     <view class="info-count">34首</view>
                 </view>
-                <view class="item-btn">
+                <view class="item-btn button-action">
                     <star-icon name="ellipsis-v" size="36" />
                 </view>
             </view>
@@ -60,7 +60,7 @@
                     >
                     <view class="info-count">34首</view>
                 </view>
-                <view class="item-btn">
+                <view class="item-btn button-action">
                     <star-icon name="ellipsis-v" size="36" />
                 </view>
             </view>
