@@ -1,54 +1,64 @@
 <template>
-    <view class="query-content" :style="{ height: windowHeight + 'px' }">
-        <view class="query-navbar" :style="{ paddingTop: statusBar + 'px' }">
-            <!-- 首页navbar左侧图标 -->
-            <view class="navbar-icon button-action flex-center">
-                <starIcon name="bars" size="32" />
-            </view>
-            <!-- 首页navbar中间tab -->
-            <view class="navbar-tab flex-center">
-                <view
-                    :class="[
-                        'tab-box',
-                        'button-action',
-                        currentKey === index && ['action-color', 'tab-action'],
-                    ]"
-                    v-for="(item, index) in navBar"
-                    :key="index"
-                    @click="handlerTab(index)"
-                >
-                    {{ item.label }}
+    <keep-alive>
+        <view class="query-content" :style="{ height: windowHeight + 'px' }">
+            <view
+                class="query-navbar"
+                :style="{ paddingTop: statusBar + 'px' }"
+            >
+                <!-- 首页navbar左侧图标 -->
+                <view class="navbar-icon button-action flex-center">
+                    <starIcon name="bars" size="32" />
+                </view>
+                <!-- 首页navbar中间tab -->
+                <view class="navbar-tab flex-center">
+                    <view
+                        :class="[
+                            'tab-box',
+                            'button-action',
+                            currentKey === index && [
+                                'action-color',
+                                'tab-action',
+                            ],
+                        ]"
+                        v-for="(item, index) in navBar"
+                        :key="index"
+                        @click="handlerTab(index)"
+                    >
+                        {{ item.label }}
+                    </view>
+                </view>
+                <!-- 首页navbar有侧图标 -->
+                <view class="navbar-icon button-action flex-center">
+                    <starIcon name="search" size="32" />
                 </view>
             </view>
-            <!-- 首页navbar有侧图标 -->
-            <view class="navbar-icon button-action flex-center">
-                <starIcon name="search" size="32" />
+            <view
+                class="query-container"
+                :style="{ height: `calc(100% - 90rpx - ${statusBar}px)` }"
+                @touchstart="onStart"
+                @touchmove="onMove"
+                @touchend="onEnd"
+            >
+                <!-- <keep-alive> -->
+                <component
+                    :style="{
+                        transform: `translateX(-${transform}px)`,
+                        transitionDuration: duration + 'ms',
+                        height: '100%',
+                        width: '100%',
+                        flexShrink: '0',
+                        overflowY: 'auto',
+                        boxSizing: 'border-box',
+                    }"
+                    :isRendering="currentKey === index"
+                    v-for="(item, index) in navBar"
+                    :key="index"
+                    :is="item.componentName"
+                />
+                <!-- </keep-alive> -->
             </view>
         </view>
-        <view
-            class="query-container"
-            :style="{ height: `calc(100% - 90rpx - ${statusBar}px)` }"
-            @touchstart="onStart"
-            @touchmove="onMove"
-            @touchend="onEnd"
-        >
-            <component
-                :style="{
-                    transform: `translateX(-${transform}px)`,
-                    transitionDuration: duration + 'ms',
-                    height: '100%',
-                    width: '100%',
-                    flexShrink: '0',
-                    overflowY: 'auto',
-                    boxSizing: 'border-box',
-                }"
-                :isRendering="currentKey === index"
-                v-for="(item, index) in navBar"
-                :key="index"
-                :is="item.componentName"
-            />
-        </view>
-    </view>
+    </keep-alive>
 </template>
 <script>
 import starIcon from '@/components/star-icon'
