@@ -5,10 +5,16 @@
         :style="{ width: boxWidth + 'px' }"
         @click="goSheetDetail(item.id)"
     >
-        <!-- 播放量 -->
+        <!-- 播放量或自定义内容 -->
         <view class="play-count">
-            <star-icon :style="{ marginRight: '8rpx' }" name="play" size="18" />
-            <text>{{ getPlayCount(item.playCount) }}</text>
+            <slot name="top">
+                <star-icon
+                    :style="{ marginRight: '8rpx' }"
+                    name="play"
+                    size="18"
+                />
+                <text>{{ getPlayCount(item.playCount) }}</text>
+            </slot>
         </view>
         <!-- 图片 -->
         <view
@@ -38,7 +44,7 @@ export default {
     components: { starIcon },
     computed: {
         boxWidth() {
-            return (this.$store.state.windowWidth - 24) / 3 - 6
+            return (this.$store.state.windowWidth - 24) / 3 - 10
         },
     },
     methods: {
@@ -71,7 +77,7 @@ export default {
 </script>
 <style lang="less" scoped>
 .song-sheet {
-    margin-right: 9px;
+    margin-right: 15px;
     position: relative;
     margin-bottom: 24rpx;
     .play-count {

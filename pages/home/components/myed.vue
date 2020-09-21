@@ -1,67 +1,75 @@
 <template>
     <scroll-view scroll-y class="myed-item">
-        <!-- 顶部用户信息 -->
-        <view class="top-userinfo flex-center">
-            <image
-                class="avatar"
-                src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600593719746&di=af8ac6c88ad848d28d80deb97db7e539&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117230425_eofqv.thumb.700_0.jpg"
-            />
-            <view class="info">
-                <view class="name text-oneline action-color">Y__JK</view>
-                <view class="lv">Lv.7</view>
-            </view>
-        </view>
-        <!-- 中间按钮 -->
-        <view class="center-button flex-center">
-            <view class="button-box">
-                <!-- <view class="button-icon"> -->
-                <star-icon name="play" size="40" class="action-color" />
-                <!-- </view> -->
-                <view class="button-name">最近播放</view>
-            </view>
-            <view class="button-box">
-                <star-icon name="music" size="40" class="action-color" />
-                <view class="button-name">我的关注</view>
-            </view>
-            <view class="button-box">
-                <star-icon name="heartbeat" size="40" class="action-color" />
-                <view class="button-name">收藏和赞</view>
-            </view>
-        </view>
-        <!-- 歌单相关 -->
-        <star-title title="我的歌单" buttonLabel="管理" />
-        <view class="sheet-info">
-            <view class="sheet-item flex-center">
-                <image
-                    class="item-img"
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600593719746&di=af8ac6c88ad848d28d80deb97db7e539&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117230425_eofqv.thumb.700_0.jpg"
-                />
-                <view class="item-info">
-                    <view class="info-name text-oneline action-color"
-                        >/// V ///</view
-                    >
-                    <view class="info-count">34首</view>
+        <view v-if="isLodingSuccess">
+            <!-- 顶部用户信息 -->
+            <view class="top-userinfo flex-center">
+                <image lazy-load class="avatar" :src="userInfo.avatarUrl" />
+                <view class="info">
+                    <view class="name text-oneline action-color">{{
+                        userInfo.nickname
+                    }}</view>
+                    <view class="lv">Lv.{{ level }}</view>
                 </view>
-                <view class="item-btn button-action">
-                    <star-icon name="ellipsis-v" size="36" />
+                <view class="info-btn">
+                    <star-icon name="angle-double-right" size="40" />
                 </view>
             </view>
-        </view>
-        <star-title title="收藏歌单" buttonLabel="管理" />
-        <view class="sheet-info">
-            <view class="sheet-item flex-center">
-                <image
-                    class="item-img"
-                    src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1600593719746&di=af8ac6c88ad848d28d80deb97db7e539&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201901%2F17%2F20190117230425_eofqv.thumb.700_0.jpg"
-                />
-                <view class="item-info">
-                    <view class="info-name text-oneline action-color"
-                        >游戏必备，起伏不断（推荐随机播放哈哈）</view
-                    >
-                    <view class="info-count">34首</view>
+            <!-- 中间按钮 -->
+            <view class="center-button flex-center">
+                <view class="button-box">
+                    <star-icon name="play" size="40" class="action-color" />
+                    <view class="button-name">最近播放</view>
                 </view>
-                <view class="item-btn button-action">
-                    <star-icon name="ellipsis-v" size="36" />
+                <view class="button-box">
+                    <star-icon name="music" size="40" class="action-color" />
+                    <view class="button-name">我的关注</view>
+                </view>
+                <view class="button-box">
+                    <star-icon
+                        name="heartbeat"
+                        size="40"
+                        class="action-color"
+                    />
+                    <view class="button-name">收藏和赞</view>
+                </view>
+            </view>
+            <!-- 歌单相关 -->
+            <star-title title="我的歌单" buttonLabel="管理" />
+            <view class="sheet-info">
+                <view
+                    class="sheet-item flex-center"
+                    v-for="(item, index) of mySheet"
+                    :key="index"
+                >
+                    <image lazy-load class="item-img" :src="item.coverImgUrl" />
+                    <view class="item-info">
+                        <view class="info-name text-oneline action-color">
+                            {{ item.name }}
+                        </view>
+                        <view class="info-count">{{ item.trackCount }}首</view>
+                    </view>
+                    <view class="item-btn button-action">
+                        <star-icon name="ellipsis-v" size="36" />
+                    </view>
+                </view>
+            </view>
+            <star-title title="收藏歌单" buttonLabel="管理" />
+            <view class="sheet-info">
+                <view
+                    class="sheet-item flex-center"
+                    v-for="(item, index) of recomSheet"
+                    :key="index"
+                >
+                    <image lazy-load class="item-img" :src="item.coverImgUrl" />
+                    <view class="item-info">
+                        <view class="info-name text-oneline action-color">
+                            {{ item.name }}
+                        </view>
+                        <view class="info-count">{{ item.trackCount }}首</view>
+                    </view>
+                    <view class="item-btn button-action">
+                        <star-icon name="ellipsis-v" size="36" />
+                    </view>
                 </view>
             </view>
         </view>
@@ -70,12 +78,69 @@
 <script>
 import starIcon from '@/components/star-icon'
 import starTitle from '@/components/star-title'
+import apis from '@/apis/index'
 export default {
     components: {
         starIcon,
         starTitle,
     },
-    methods: {},
+    props: {
+        isRendering: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    data() {
+        return {
+            level: 0,
+            userInfo: null,
+            mySheet: [],
+            recomSheet: [],
+        }
+    },
+    computed: {
+        isLodingSuccess() {
+            if (
+                this.userInfo &&
+                this.mySheet.length !== 0 &&
+                this.recomSheet.length !== 0
+            ) {
+                return true
+            } else {
+                return false
+            }
+        },
+    },
+    watch: {
+        isRendering: {
+            handler(val) {
+                if (val) {
+                    this.getMyedData()
+                }
+            },
+            immediate: true,
+        },
+    },
+    methods: {
+        async getMyedData() {
+            let uid = this.$store.state.userInfo.userId
+            if (!this.userInfo) {
+                let userInfoRes = await apis.getUserInfo({ uid })
+                this.level = userInfoRes.level
+                this.userInfo = userInfoRes.profile
+            }
+            if (this.mySheet.length === 0 || !this.recomSheet.length === 0) {
+                let playListRes = await apis.getUserSheet({ uid, limit: 9999 })
+                playListRes.playlist.forEach((ele) => {
+                    if (ele.ordered) {
+                        this.recomSheet.push(ele)
+                    } else {
+                        this.mySheet.push(ele)
+                    }
+                })
+            }
+        },
+    },
 }
 </script>
 <style lang="less" scoped>
@@ -97,7 +162,7 @@ export default {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            width: calc(100% - 110rpx);
+            width: calc(100% - 150rpx);
             .name {
                 font-weight: bold;
                 font-size: 30rpx;
@@ -106,6 +171,11 @@ export default {
                 font-size: 24rpx;
                 font-style: italic;
             }
+        }
+        .info-btn {
+            width: 40rpx;
+            line-height: 90rpx;
+            text-align: center;
         }
     }
     .center-button {

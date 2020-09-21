@@ -1,6 +1,6 @@
 <template>
 	<view class="container" :style="css.size">
-		<image :src="css.img" :class="css.blur" mode="aspectFill" v-if="css.img"></image>
+		<image lazy-load :src="css.img" :class="css.blur" mode="aspectFill" v-if="css.img"></image>
 		<view :class="css.blur" v-else></view>
 	</view>
 </template>

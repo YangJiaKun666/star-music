@@ -9,7 +9,7 @@
 								<view class="disc disc-border" style="width: 375rpx;height: 375rpx;">
 									<view class="disc disc-border" style="width: 350rpx;height: 350rpx;">
 										<view class="disc disc-border" style="width: 325rpx;height: 325rpx;">
-											<image :src=imgUrl mode="scaleToFill" class="disc-image"/>
+											<image lazy-load :src=imgUrl mode="scaleToFill" class="disc-image"/>
 										</view>
 									</view>
 								</view>

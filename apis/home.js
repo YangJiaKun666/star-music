@@ -12,8 +12,23 @@ export default {
         return res
     },
     // 发现-->推荐歌曲
-    getFindSongData: async()=>{
-        let res = await httpRequest('/personalized/newsong','GET')
+    getFindSongData: async () => {
+        let res = await httpRequest('/personalized/newsong', 'GET')
         return res
-    }
+    },
+    // 我的-->用户信息
+    getUserInfo: async (data) => {
+        let res = await httpRequest('/user/detail', 'GET', data)
+        return res
+    },
+    // 我的-->用户歌单
+    getUserSheet: async (data) => {
+        let res = await httpRequest('/user/playlist', 'GET', data)
+        return res
+    },
+    // 我的-->排行榜
+    getTopList: async () => {
+        let res = await httpRequest('/toplist', 'GET')
+        return res
+    },
 }

@@ -1,7 +1,7 @@
 <template>
     <view class="song-item flex-center button-action">
         <view class="item-image">
-            <image :src="item.picUrl" />
+            <image lazy-load :src="item.picUrl" />
         </view>
         <view class="item-info">
             <view class="info-title text-oneline">
