@@ -1,0 +1,240 @@
+<template>
+    <scroll-view
+        :lower-threshold="100"
+        scroll-y
+        @scrolltolower="scrollBottom"
+        class="single"
+    >
+        <view class="checked flex-center">
+            <view
+                class="button-action flex-center"
+                @click="isEdit = true"
+                v-show="!isEdit"
+            >
+                <star-icon
+                    size="30"
+                    name="th"
+                    :style="{ marginRight: '14rpx' }"
+                />
+                操作
+            </view>
+            <view class="handler" v-show="isEdit">
+                <view class="button-action flex-center" @click="onCheckAll">
+                    <view
+                        class="check"
+                        :style="{
+                            border: isAll
+                                ? '0px solid #464646'
+                                : '1px solid #464646',
+                            marginRight: '14rpx',
+                        }"
+                    >
+                        <star-icon
+                            :class="isAll && 'check-action'"
+                            class="check-icon"
+                            name="check-square"
+                            size="30"
+                        />
+                    </view>
+                    {{ isAll ? '取消全选' : '全选' }}
+                </view>
+                <view class="button-action flex-center">
+                    <star-icon
+                        size="30"
+                        name="star"
+                        :style="{ marginRight: '14rpx' }"
+                    />
+                    收藏
+                </view>
+                <view class="button-action flex-center" @click="isEdit = false">
+                    <star-icon
+                        size="30"
+                        name="close"
+                        :style="{ marginRight: '14rpx' }"
+                    />
+                    取消
+                </view>
+            </view>
+        </view>
+        <view>
+            <star-song-item
+                v-for="(item, index) of singleData"
+                :key="index"
+                :item="item"
+                @click-item="clickItem"
+            >
+                <template #rightIcon>
+                    <view @click.stop class="check-box">
+                        <star-icon
+                            v-show="!isEdit"
+                            name="ellipsis-v"
+                            size="34"
+                        />
+                        <view
+                            class="check"
+                            :style="{
+                                border: item.isChecked
+                                    ? '0px solid #464646'
+                                    : '1px solid #464646',
+                            }"
+                            v-show="isEdit"
+                        >
+                            <star-icon
+                                :class="item.isChecked && 'check-action'"
+                                class="check-icon"
+                                name="check-square"
+                                size="30"
+                            />
+                        </view>
+                    </view>
+                </template>
+            </star-song-item>
+        </view>
+        <star-loading v-show="loadMore" />
+    </scroll-view>
+</template>
+<script>
+import starSongItem from '@/components/star-song-item'
+import starIcon from '@/components/star-icon'
+import starLoading from '@/components/star-loading'
+export default {
+    props: {
+        isRunLoading: Boolean,
+        serchFun: Function,
+    },
+    components: {
+        starSongItem,
+        starIcon,
+        starLoading,
+    },
+    computed: {
+        isAll: {
+            get() {
+                if (!this.singleData) return false
+                if (this.singleData.some((ele) => ele.isChecked !== true)) {
+                    return false
+                } else {
+                    return true
+                }
+            },
+        },
+    },
+    data() {
+        return {
+            singleData: [],
+            hasMore: true,
+            loadMore: false,
+            type: 1,
+            limit: 30,
+            offset: 1,
+            isEdit: false,
+        }
+    },
+    watch: {
+        isRunLoading: {
+            async handler(val) {
+                if (val && this.singleData.length === 0) {
+                    this.getSingleData()
+                }
+            },
+            immediate: true,
+        },
+    },
+    methods: {
+        clickItem(id) {
+            if (this.isEdit) {
+                let index = this.singleData.findIndex((ele) => ele.id === id)
+                this.singleData[index].isChecked = !this.singleData[index]
+                    .isChecked
+            } else {
+                uni.navigateTo({
+                    url: `/pages/play/index?id=${id}`,
+                })
+            }
+        },
+        onCheckAll() {
+            if (this.isAll) {
+                for (const i of this.singleData) {
+                    this.$set(i, 'isChecked', false)
+                }
+            } else {
+                for (const i of this.singleData) {
+                    this.$set(i, 'isChecked', true)
+                }
+            }
+        },
+        scrollBottom() {
+            if (!this.hasMore) return (this.loadMore = false)
+            this.offset++
+            this.getSingleData()
+        },
+        async getSingleData() {
+            this.loadMore = true
+            let data = {
+                type: 1,
+                limit: this.limit,
+                offset: (this.offset - 1) * this.limit,
+            }
+            let res = await this.serchFun(data)
+            if (!res.result.songs) return
+            this.hasMore = res.result.hasMore
+            let singleData = res.result.songs.map((ele) => {
+                return {
+                    id: ele.id,
+                    name: ele.name,
+                    isChecked: false,
+                    hideImg: true,
+                    song: {
+                        alias: ele.alias,
+                        artists: ele.artists,
+                        album: ele.album,
+                    },
+                }
+            })
+            this.singleData = this.singleData.concat(singleData)
+            this.loadMore = false
+        },
+    },
+}
+</script>
+<style lang="less" scoped>
+.single {
+    .checked {
+        height: 80rpx;
+        height: 80rpx;
+        width: 100%;
+    }
+    .handler {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+    }
+    .check-box {
+        width: 80rpx;
+        height: 80rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .check-action {
+        opacity: 1 !important;
+    }
+    .check {
+        width: 24rpx;
+        height: 24rpx;
+        box-sizing: border-box;
+        position: relative;
+        border-radius: 6rpx;
+        .check-icon {
+            position: absolute;
+            opacity: 0;
+            transition-duration: 200ms;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+</style>

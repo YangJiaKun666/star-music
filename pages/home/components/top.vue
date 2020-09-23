@@ -1,6 +1,6 @@
 <template>
     <scroll-view class="top-list flex-center" scroll-y>
-        <view class="recommend flex-center">
+        <view v-if="isLodingSuccess" class="recommend flex-center">
             <star-song-sheet
                 v-for="(item, index) of dataList"
                 :item="item"
@@ -11,14 +11,17 @@
                 </template>
             </star-song-sheet>
         </view>
+        <star-loading v-else />
     </scroll-view>
 </template>
 <script>
 import starSongSheet from '@/components/star-song-sheet'
+import starLoading from '@/components/star-loading'
 import apis from '@/apis/index'
 export default {
     components: {
         starSongSheet,
+        starLoading
     },
     data() {
         return {

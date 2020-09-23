@@ -6,12 +6,9 @@
         <!-- 顶部logo -->
         <view class="login-top-logo flex-center">
             <image class="login-logo" src="@/static/images/logo.png" />
-            <text>welcome to star music</text>
         </view>
         <!-- 底部登录 -->
-        <transition name="sigin-signup">
-            <signIn v-show="isShow" />
-        </transition>
+        <signIn />
     </view>
 </template>
 <script>
@@ -21,27 +18,8 @@ export default {
     components: {
         signIn,
     },
-    data() {
-        return {
-            isShow: false,
-            timer: null,
-        }
-    },
-
     computed: {
         ...mapState(['windowHeight']),
-    },
-
-    onLoad() {},
-
-    onShow() {
-        this.timer = setTimeout(() => {
-            this.isShow = true
-        }, 1000)
-    },
-
-    onHide() {
-        clearTimeout(this.timer)
     },
 }
 </script>
@@ -52,15 +30,15 @@ export default {
     background-size: 100%;
     flex-direction: column;
     justify-content: space-between;
-    padding: 100rpx 24rpx 60rpx;
+    padding: 160rpx 24rpx 60rpx;
     box-sizing: border-box;
     color: #fff;
     position: relative;
     .login-top-logo {
         flex-direction: column;
         .login-logo {
-            width: 220rpx;
-            height: 220rpx;
+            width: 240rpx;
+            height: 240rpx;
         }
         text {
             font-size: 36rpx;

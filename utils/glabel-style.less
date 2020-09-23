@@ -55,21 +55,6 @@ body /deep/ .uni-scroll-view::-webkit-scrollbar {
     display: flex;
     align-items: center;
 }
-
-// transition动画
-.sigin-signup-enter,
-.sigin-signup-leave-to {
-    opacity: 0;
-}
-.sigin-signup-enter-to,
-.sigin-signup-leave {
-    opacity: 1;
-}
-.sigin-signup-enter-active,
-.sigin-signup-leave-active {
-    transition-duration: 0.2s;
-}
-
 // 按钮激活时
 .button-action {
     position: relative;
@@ -88,4 +73,26 @@ body /deep/ .uni-scroll-view::-webkit-scrollbar {
     z-index: 1;
     background: rgba(0, 0, 0, 0.15);
     border-radius: 20rpx;
+}
+// 引导页logo动画
+.logo-transition {
+    animation: logoTransition 4s forwards;
+}
+@keyframes logoTransition {
+    0% {
+        transform: translateY(-50rpx);
+        opacity: 0;
+    }
+    30% {
+        transform: translateY(-200rpx);
+        opacity: 1;
+    }
+    70% {
+        transform: translateY(-200rpx);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-300rpx);
+        opacity: 0;
+    }
 }

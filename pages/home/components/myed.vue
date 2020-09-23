@@ -73,16 +73,19 @@
                 </view>
             </view>
         </view>
+        <star-loading v-else />
     </scroll-view>
 </template>
 <script>
 import starIcon from '@/components/star-icon'
 import starTitle from '@/components/star-title'
+import starLoading from '@/components/star-loading'
 import apis from '@/apis/index'
 export default {
     components: {
         starIcon,
         starTitle,
+        starLoading,
     },
     props: {
         isRendering: {

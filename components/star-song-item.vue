@@ -1,16 +1,26 @@
 <template>
-    <view class="song-item flex-center button-action">
-        <view class="item-image">
+    <view
+        class="song-item flex-center button-action"
+        @click="$emit('click-item', item.id)"
+    >
+        <view class="item-image" v-if="!item.hideImg">
             <image lazy-load :src="item.picUrl" />
         </view>
-        <view class="item-info">
+        <view
+            class="item-info"
+            :style="{
+                width: item.hideImg
+                    ? 'calc(100% - 80rpx)'
+                    : 'calc(100% - 200rpx)',
+            }"
+        >
             <view class="info-title text-oneline">
                 <text class="action-color">{{ item.name }}</text>
                 <text>{{
                     item.song.alias[0] ? `（${item.song.alias[0]}）` : ''
                 }}</text>
             </view>
-            <view class="info-name text-oneline">
+            <view v-if="item.song" class="info-name text-oneline">
                 <text
                     v-for="(songer, index) of item.song.artists"
                     :key="index"
@@ -24,7 +34,9 @@
             </view>
         </view>
         <view class="item-icon">
-            <star-icon name="play-circle" size="60" />
+            <slot name="rightIcon">
+                <star-icon name="play-circle" size="60" />
+            </slot>
         </view>
     </view>
 </template>
@@ -61,7 +73,6 @@ export default {
         }
     }
     .item-info {
-        width: calc(100% - 200rpx);
         box-sizing: border-box;
         height: 100%;
         display: flex;

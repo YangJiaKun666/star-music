@@ -84,7 +84,7 @@ export default {
         width: 100%;
         position: absolute;
         z-index: 1;
-        top: 4rpx;
+        top: 0rpx;
         left: 0;
         font-size: 20rpx;
         color: #fff;

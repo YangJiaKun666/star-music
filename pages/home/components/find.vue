@@ -76,9 +76,11 @@
                     v-for="(item, index) of songData"
                     :item="item"
                     :key="index"
+                    @click-item="clickItem"
                 />
             </view>
         </view>
+        <star-loading v-else />
     </scroll-view>
 </template>
 <script>
@@ -86,6 +88,7 @@ import starIcon from '@/components/star-icon'
 import starTitle from '@/components/star-title'
 import starSongSheet from '@/components/star-song-sheet'
 import starSongItem from '@/components/star-song-item'
+import starLoading from '@/components/star-loading'
 import apis from '@/apis/index'
 export default {
     components: {
@@ -93,6 +96,7 @@ export default {
         starSongSheet,
         starTitle,
         starSongItem,
+        starLoading
     },
     props: {
         isRendering: {
@@ -146,6 +150,11 @@ export default {
         },
         selectDetail(item) {
             console.log(item)
+        },
+        clickItem(id) {
+            uni.navigateTo({
+                url: `/pages/play/index?id=${id}`,
+            })
         },
     },
 }

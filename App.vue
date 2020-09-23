@@ -48,17 +48,6 @@ export default {
                     windowWidth,
                     windowHeight,
                 })
-                // 取出用户信息，如果不存在曾视为未登录
-                let userInfo = this.$store.state.userInfo
-                if (!userInfo) {
-                    uni.redirectTo({
-                        url: '/pages/login/index',
-                    })
-                } else {
-                    uni.redirectTo({
-                        url: '/pages/home/index',
-                    })
-                }
             },
         })
     },

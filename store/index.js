@@ -8,6 +8,7 @@ const store = new Vuex.Store({
         windowHeight: null,
         windowWidth: null,
         userInfo: uni.getStorageSync('userInfo') || null,
+        historySearch: uni.getStorageSync('historySearch') || [],
     },
     mutations: {
         getSystemInfo(state, object) {
@@ -18,7 +19,17 @@ const store = new Vuex.Store({
         },
         setUserInfo(state, info) {
             state.userInfo = info
-            uni.setStorageSync('userInfo', info)
+            uni.setStorageSync('userInfo', state.userInfo)
+        },
+        setHistory(state, value) {
+            if (state.historySearch.findIndex((ele) => ele === value) !== -1)
+                return
+            state.historySearch.push(value)
+            uni.setStorageSync('historySearch', state.historySearch)
+        },
+        clearHistory(state) {
+            state.historySearch = []
+            uni.setStorageSync('historySearch', state.historySearch)
         },
     },
 })
