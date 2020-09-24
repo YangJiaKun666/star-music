@@ -17,11 +17,12 @@
     align-items: baseline;
     justify-content: center;
     .loading-line {
-        height: 14px;
+        height: 16px;
         width: 2px;
         border-radius: 6px;
         background: red;
         margin-right: 4px;
+        transform-origin: 50% 100%;
         transform: translateY(1px);
         animation: loading 0.8s linear infinite;
     }
@@ -31,13 +32,13 @@
 }
 @keyframes loading {
     0% {
-        height: 4px;
+        transform: scaleY(0.3);
     }
     50% {
-        height: 14px;
+        transform: scaleY(1);
     }
     100% {
-        height: 4px;
+        transform: scaleY(0.3);
     }
 }
 </style>

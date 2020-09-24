@@ -1,56 +1,5 @@
 <template>
     <scroll-view scroll-y @scrolltolower="scrollBottom" class="single">
-        <view class="checked flex-center">
-            <view
-                class="button-action flex-center"
-                @click="isEdit = true"
-                v-show="!isEdit"
-            >
-                <star-icon
-                    size="30"
-                    name="th"
-                    :style="{ marginRight: '14rpx' }"
-                />
-                操作
-            </view>
-            <view class="handler" v-show="isEdit">
-                <view class="button-action flex-center" @click="onCheckAll">
-                    <view
-                        class="check"
-                        :style="{
-                            border: isAll
-                                ? '0px solid #464646'
-                                : '1px solid #464646',
-                            marginRight: '14rpx',
-                        }"
-                    >
-                        <star-icon
-                            :class="isAll && 'check-action'"
-                            class="check-icon"
-                            name="check-square"
-                            size="30"
-                        />
-                    </view>
-                    {{ isAll ? '取消全选' : '全选' }}
-                </view>
-                <view class="button-action flex-center">
-                    <star-icon
-                        size="30"
-                        name="star"
-                        :style="{ marginRight: '14rpx' }"
-                    />
-                    收藏
-                </view>
-                <view class="button-action flex-center" @click="isEdit = false">
-                    <star-icon
-                        size="30"
-                        name="close"
-                        :style="{ marginRight: '14rpx' }"
-                    />
-                    取消
-                </view>
-            </view>
-        </view>
         <star-song-item
             v-for="(item, index) of singleData"
             :key="index"
@@ -59,23 +8,7 @@
         >
             <template #rightIcon>
                 <view @click.stop class="check-box">
-                    <star-icon v-show="!isEdit" name="ellipsis-v" size="34" />
-                    <view
-                        class="check"
-                        :style="{
-                            border: item.isChecked
-                                ? '0px solid #464646'
-                                : '1px solid #464646',
-                        }"
-                        v-show="isEdit"
-                    >
-                        <star-icon
-                            :class="item.isChecked && 'check-action'"
-                            class="check-icon"
-                            name="check-square"
-                            size="30"
-                        />
-                    </view>
+                    <star-icon name="ellipsis-v" size="34" />
                 </view>
             </template>
         </star-song-item>
@@ -96,26 +29,12 @@ export default {
         starIcon,
         starLoading,
     },
-    computed: {
-        isAll: {
-            get() {
-                if (this.singleData.length === 0) return false
-                if (this.singleData.some((ele) => ele.isChecked !== true)) {
-                    return false
-                } else {
-                    return true
-                }
-            },
-        },
-    },
     data() {
         return {
             singleData: [],
             hasMore: true,
-            loadMore: false,
             limit: 30,
             offset: 1,
-            isEdit: false,
         }
     },
     watch: {
