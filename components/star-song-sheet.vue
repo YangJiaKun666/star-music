@@ -31,7 +31,6 @@
 </template>
 <script>
 import starIcon from './star-icon'
-import { mapState } from 'vuex'
 export default {
     props: {
         item: {
@@ -69,7 +68,7 @@ export default {
                 case 10:
                     return (playStr = `${number.slice(0, 2)}亿`)
                 default:
-                    return (playStr = 0)
+                    return (playStr = number)
             }
         },
     },

@@ -1,10 +1,5 @@
 <template>
-    <scroll-view
-        :lower-threshold="100"
-        scroll-y
-        @scrolltolower="scrollBottom"
-        class="single"
-    >
+    <scroll-view scroll-y @scrolltolower="scrollBottom" class="single">
         <view class="checked flex-center">
             <view
                 class="button-action flex-center"
@@ -56,41 +51,35 @@
                 </view>
             </view>
         </view>
-        <view>
-            <star-song-item
-                v-for="(item, index) of singleData"
-                :key="index"
-                :item="item"
-                @click-item="clickItem"
-            >
-                <template #rightIcon>
-                    <view @click.stop class="check-box">
+        <star-song-item
+            v-for="(item, index) of singleData"
+            :key="index"
+            :item="item"
+            @click-item="clickItem"
+        >
+            <template #rightIcon>
+                <view @click.stop class="check-box">
+                    <star-icon v-show="!isEdit" name="ellipsis-v" size="34" />
+                    <view
+                        class="check"
+                        :style="{
+                            border: item.isChecked
+                                ? '0px solid #464646'
+                                : '1px solid #464646',
+                        }"
+                        v-show="isEdit"
+                    >
                         <star-icon
-                            v-show="!isEdit"
-                            name="ellipsis-v"
-                            size="34"
+                            :class="item.isChecked && 'check-action'"
+                            class="check-icon"
+                            name="check-square"
+                            size="30"
                         />
-                        <view
-                            class="check"
-                            :style="{
-                                border: item.isChecked
-                                    ? '0px solid #464646'
-                                    : '1px solid #464646',
-                            }"
-                            v-show="isEdit"
-                        >
-                            <star-icon
-                                :class="item.isChecked && 'check-action'"
-                                class="check-icon"
-                                name="check-square"
-                                size="30"
-                            />
-                        </view>
                     </view>
-                </template>
-            </star-song-item>
-        </view>
-        <star-loading v-show="loadMore" />
+                </view>
+            </template>
+        </star-song-item>
+        <star-loading v-show="hasMore" />
     </scroll-view>
 </template>
 <script>
@@ -110,7 +99,7 @@ export default {
     computed: {
         isAll: {
             get() {
-                if (!this.singleData) return false
+                if (this.singleData.length === 0) return false
                 if (this.singleData.some((ele) => ele.isChecked !== true)) {
                     return false
                 } else {
@@ -124,7 +113,6 @@ export default {
             singleData: [],
             hasMore: true,
             loadMore: false,
-            type: 1,
             limit: 30,
             offset: 1,
             isEdit: false,
@@ -164,12 +152,11 @@ export default {
             }
         },
         scrollBottom() {
-            if (!this.hasMore) return (this.loadMore = false)
+            if (!this.hasMore) return
             this.offset++
             this.getSingleData()
         },
         async getSingleData() {
-            this.loadMore = true
             let data = {
                 type: 1,
                 limit: this.limit,
@@ -192,7 +179,6 @@ export default {
                 }
             })
             this.singleData = this.singleData.concat(singleData)
-            this.loadMore = false
         },
     },
 }

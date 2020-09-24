@@ -119,7 +119,7 @@ export default {
         height: calc(100% - 70rpx);
         .content {
             height: 100%;
-            padding: 0 24rpx;
+            padding: 0 12px;
             box-sizing: border-box;
         }
     }
