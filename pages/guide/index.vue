@@ -31,16 +31,19 @@ export default {
     },
     onShow() {
         this.$nextTick(() => {
+            console.log('haj')
             this.logoShow = true
             setTimeout(() => {
                 // 取出用户信息，如果不存在曾视为未登录
                 let userInfo = this.$store.state.userInfo
                 if (!userInfo) {
+                    console.log('go login')
                     uni.redirectTo({
                         url: '/pages/login/index',
                     })
                 } else {
-                    uni.redirectTo({
+                    console.log('go home')
+                    uni.switchTab({
                         url: '/pages/home/index',
                     })
                 }

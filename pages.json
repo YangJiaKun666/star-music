@@ -1,30 +1,98 @@
 {
     "pages": [
         {
-            "path": "pages/guide/index"
+            "path": "pages/guide/index",
+            "style": {
+                "navigationStyle": "custom"
+            }
         },
         {
-            "path": "pages/login/index"
+            "path": "pages/login/index",
+            "style": {
+                "navigationStyle": "custom"
+            }
         },
         {
-            "path": "pages/home/index"
+            "path": "pages/home/index",
+            "style": {
+                "navigationBarTitleText": "首页"
+            }
         },
         {
-            "path": "pages/search/index"
+            "path": "pages/top/index",
+            "style": {
+                "navigationBarTitleText": "排行榜"
+            }
         },
         {
-            "path": "pages/sheet-list/index"
+            "path": "pages/myed/index",
+            "style": {
+                "navigationBarTitleText": "我的"
+            }
         },
         {
-            "path": "pages/play/index"
+            "path": "pages/search/index",
+            "style": {
+                "navigationStyle": "custom"
+            }
+        },
+        {
+            "path": "pages/sheet-list/index",
+            "style": {
+                "transparentTitle": "auto"
+            }
+        },
+        {
+            "path": "pages/play/index",
+            "style": {
+                "transparentTitle": "always"
+            }
         }
     ],
     "globalStyle": {
-        "navigationStyle": "custom",
         "navigationBarTextStyle": "black",
+        "navigationBarBackgroundColor": "#FFFFFF",
         "app-plus": {
             "animationType": "zoom-fade-out",
             "animationDuration": 300
+        }
+    },
+    "tabBar": {
+        "backgroundColor": "#FFFFFF",
+        "color": "#898989",
+        "selectedColor": "#d81e06",
+        "borderStyle": "white",
+        "fontSize": "10px",
+        "list": [
+            {
+                "pagePath": "pages/home/index",
+                "text": "首页",
+                "iconPath": "static/images/home.png",
+                "selectedIconPath": "static/images/home-a.png"
+            },
+            {
+                "pagePath": "pages/top/index",
+                "text": "排行榜",
+                "iconPath": "static/images/top.png",
+                "selectedIconPath": "static/images/top-a.png"
+            },
+            {
+                "pagePath": "pages/videos/index",
+                "text": "视频",
+                "iconPath": "static/images/video.png",
+                "selectedIconPath": "static/images/video-a.png"
+            },
+            {
+                "pagePath": "pages/myed/index",
+                "text": "我的",
+                "iconPath": "static/images/myed.png",
+                "selectedIconPath": "static/images/myed-a.png"
+            }
+        ],
+        "midButton": {
+            "height": "65px",
+            "iconPath": "static/images/search.png",
+            "iconWidth": "50px"
         }
     }
 }

@@ -47,10 +47,11 @@
 	
 	> image,> view{
 		position: absolute;
-		z-index: 1;
+		z-index: -1;
 		box-sizing: content-box;
 		width: 100%;
 		height: 100%;
+		transform: scale(1.5);
 		
 		&.xs{
 			padding: 10px;

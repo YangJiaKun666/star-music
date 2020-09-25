@@ -1,5 +1,5 @@
 <template>
-    <scroll-view class="top-list flex-center" scroll-y>
+    <view class="top-list flex-center">
         <view v-if="isLodingSuccess" class="recommend flex-center">
             <star-song-sheet
                 v-for="(item, index) of dataList"
@@ -12,7 +12,7 @@
             </star-song-sheet>
         </view>
         <star-loading v-else />
-    </scroll-view>
+    </view>
 </template>
 <script>
 import starSongSheet from '@/components/star-song-sheet'
@@ -21,28 +21,12 @@ import apis from '@/apis/index'
 export default {
     components: {
         starSongSheet,
-        starLoading
+        starLoading,
     },
     data() {
         return {
             dataList: null,
         }
-    },
-    props: {
-        isRendering: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    watch: {
-        isRendering: {
-            handler(val) {
-                if (val) {
-                    this.getTopData()
-                }
-            },
-            immediate: true,
-        },
     },
     computed: {
         isLodingSuccess() {
@@ -53,20 +37,17 @@ export default {
             }
         },
     },
-    methods: {
-        async getTopData() {
-            if (this.dataList) return
-            let res = await apis.getTopList()
-            this.dataList = res.list
-            this.dataList = res.list.map((ele) => {
-                return {
-                    id: ele.id,
-                    picUrl: ele.coverImgUrl,
-                    name: ele.name,
-                    updateFrequency: ele.updateFrequency,
-                }
-            })
-        },
+    async onShow() {
+        let res = await apis.getTopList()
+        this.dataList = res.list
+        this.dataList = res.list.map((ele) => {
+            return {
+                id: ele.id,
+                picUrl: ele.coverImgUrl,
+                name: ele.name,
+                updateFrequency: ele.updateFrequency,
+            }
+        })
     },
 }
 </script>

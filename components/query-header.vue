@@ -2,25 +2,29 @@
     <view :style="{ height: showSecurity ? customBar + 'px' : '' }">
         <view
             class="query-header flex-center"
-            :style="{ paddingTop: statusBar + 'px', background }"
+            :style="{ height: customBar + 'px', paddingTop: statusBar + 'px' }"
         >
+            <star-blur
+                class="sheet-bg"
+                :style="{ opacity }"
+                :params="{
+                    width: '100%',
+                    height: '45px',
+                    image,
+                    blur: 's',
+                }"
+            />
             <view class="header-back-btn">
                 <view class="button-action flex-center" @click="onBack">
-                    <star-icon
-                        name="angle-left"
-                        size="60"
-                        class="action-color"
-                    />
+                    <star-icon name="angle-left" size="60" :style="{ color }" />
                 </view>
             </view>
-            <view class="header-content">
+            <view class="header-content" :style="{ color }">
                 <slot name="centerContent">
-                    <view class="center-text action-color text-oneline">{{
-                        title
-                    }}</view>
+                    <view class="center-text text-oneline">{{ title }}</view>
                 </slot>
             </view>
-            <view class="right-button">
+            <view class="header-back-btn">
                 <slot name="rightButton" />
             </view>
         </view>
@@ -28,18 +32,28 @@
 </template>
 <script>
 import starIcon from '@/components/star-icon'
+import starBlur from '@/components/helang-blur'
 import { mapState } from 'vuex'
 export default {
     components: {
         starIcon,
+        starBlur,
     },
     props: {
         title: String,
-        background: String,
-        showSecurity:Boolean
+        showSecurity: Boolean,
+        color: {
+            type: String,
+            default: '#000',
+        },
+        opacity: {
+            type: [String,Number],
+            default: 0
+        },
+        image: String
     },
     computed: {
-        ...mapState(['statusBar','customBar']),
+        ...mapState(['statusBar', 'customBar']),
     },
     methods: {
         onBack() {
@@ -57,7 +71,15 @@ export default {
     left: 0;
     width: 100%;
     z-index: 1;
-    transition-duration: 0.3s;
+    box-sizing: border-box;
+    .sheet-bg {
+        position: fixed;
+        width: 100%;
+        top: 0;
+        left: 0;
+        height: 45px;
+        z-index: -1;
+    }
     .header-back-btn {
         width: 45px;
         height: 45px;
@@ -78,6 +100,7 @@ export default {
     }
     .right-button {
         width: 45px;
+        height: 100%;
     }
 }
 </style>

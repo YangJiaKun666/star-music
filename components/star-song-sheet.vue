@@ -48,7 +48,9 @@ export default {
     },
     methods: {
         goSheetDetail(id) {
-            console.log(id)
+            uni.navigateTo({
+                url: '/pages/sheet-list/index?id=' + id
+            })
         },
         getPlayCount(number) {
             if (!number) return 0
