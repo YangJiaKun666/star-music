@@ -32,6 +32,18 @@
             }
         },
         {
+            "path": "pages/mv/index",
+            "style": {
+                "navigationBarTitleText": "MV"
+            }
+        },
+        {
+            "path": "pages/songer/index",
+            "style": {
+                "navigationBarTitleText": "歌手"
+            }
+        },
+        {
             "path": "pages/top/index",
             "style": {
                 "navigationBarTitleText": "排行榜"

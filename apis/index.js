@@ -5,6 +5,7 @@ import sheet from './sheet'
 import song from './song'
 import videos from './videos'
 import mv from './mv'
+import songer from './songer'
 
 export default {
     ...login,
@@ -13,5 +14,6 @@ export default {
     ...sheet,
     ...song,
     ...videos,
-    ...mv
+    ...mv,
+    ...songer
 }

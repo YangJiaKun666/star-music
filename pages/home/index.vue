@@ -39,7 +39,7 @@
                     </view>
                     <view class="tags-name">歌单</view>
                 </view>
-                <view class="tags-box">
+                <view class="tags-box" @click="toMv">
                     <view class="tags-icon button-color">
                         <star-icon
                             name="youtube-play"
@@ -49,7 +49,7 @@
                     </view>
                     <view class="tags-name">MV</view>
                 </view>
-                <view class="tags-box">
+                <view class="tags-box" @click="toSonger">
                     <view class="tags-icon button-color">
                         <star-icon
                             name="microphone"
@@ -138,6 +138,18 @@ export default {
         toSheetInfo() {
             uni.navigateTo({
                 url: '/pages/sheet-info/index',
+            })
+        },
+        // mv
+        toMv() {
+            uni.navigateTo({
+                url: '/pages/mv/index',
+            })
+        },
+        // 歌手
+        toSonger() {
+            uni.navigateTo({
+                url: '/pages/songer/index',
             })
         },
     },

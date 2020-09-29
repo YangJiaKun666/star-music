@@ -14,7 +14,7 @@
         <view class="mv-info">
             <view class="mv-name action-color">{{ item.name }}</view>
             <view class="mv-timeorname flex-center">
-                <view class="mv-timeorname__time">{{
+                <view v-if="item.duration" class="mv-timeorname__time">{{
                     getTime(item.duration)
                 }}</view>
                 <view class="mv-timeorname__name">{{ item.artistName }}</view>
