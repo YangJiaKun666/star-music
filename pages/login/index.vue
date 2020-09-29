@@ -5,7 +5,7 @@
     >
         <!-- 顶部logo -->
         <view class="login-top-logo flex-center">
-            <image class="login-logo" src="@/static/images/logo.png" />
+            <image mode="aspectFill" lazy-load class="login-logo" src="@/static/images/logo.png" />
         </view>
         <!-- 底部登录 -->
         <signIn />

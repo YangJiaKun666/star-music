@@ -1,23 +1,17 @@
 <template>
-    <view class="video-box">
-        <video
-            class="video-content"
-            src="http://vodkgeyttp8.vod.126.net/cloudmusic/obj/core/4066732791/4c242aa94af22aa19f432a4310046569.mp4?wsSecret=586212e2fe9bb66e0468be0182b54179&wsTime=1600596822"
-            controls
-            poster="https://p1.music.126.net/w_IkeNuyxNTUg-bylDilWQ==/109951165325955405.jpg"
-            title="测试"
-            enable-play-gesture
-            show-mute-btn
-            object-fit="cover"
-        />
+    <view class="video-box button-action">
+        <image mode="aspectFill" class="video-content" :src="item.coverUrl" />
         <view class="user-name-time">
-            <view class="name action-color">房东的猫《青梅》mv</view>
+            <view class="name">{{ item.title || item.name }}</view>
             <view class="time flex-center">
-                <text>发布时间：2020-09-27</text>
-                <text>播放量：1232132</text>
+                <text>时长：{{ getTime(item.durationms || item.duration) }}</text>
+                <text
+                    >播放量：{{
+                        getPlayCount(item.playTime || item.playCount)
+                    }}</text
+                >
             </view>
         </view>
-        <view class="video-hr"></view>
     </view>
 </template>
 <script>
@@ -26,34 +20,81 @@ export default {
     components: {
         starIcon,
     },
+    props: {
+        item: {
+            type: Object,
+            default: () => {
+                return {}
+            },
+        },
+    },
+    methods: {
+        getPlayCount(number) {
+            if (!number) return 0
+            number = String(number)
+            let playStr = ''
+            switch (number.length) {
+                case 5:
+                    return (playStr = `${number.slice(0, 1)}万`)
+                case 6:
+                    return (playStr = `${number.slice(0, 2)}万`)
+                case 7:
+                    return (playStr = `${number.slice(0, 3)}万`)
+                case 8:
+                    return (playStr = `${number.slice(0, 4)}万`)
+                case 9:
+                    return (playStr = `${number.slice(0, 1)}亿`)
+                case 10:
+                    return (playStr = `${number.slice(0, 2)}亿`)
+                default:
+                    return (playStr = number)
+            }
+        },
+        getTime(date) {
+            date = date / 1000
+            let M =
+                parseInt((date % 3600) / 60) < 10
+                    ? '0' + parseInt((date % 3600) / 60)
+                    : parseInt((date % 3600) / 60)
+            let S =
+                parseInt((date % 3600) % 60) < 10
+                    ? '0' + parseInt((date % 3600) % 60)
+                    : parseInt((date % 3600) % 60)
+            return `${M}:${S}`
+        },
+    },
 }
 </script>
 <style lang="less" scoped>
 .video-box {
-    margin-bottom: 24rpx;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
     .video-content {
-        top: 0;
-        left: 0;
         width: 100%;
-        height: 400rpx;
-        border-radius: 20rpx;
-        margin-bottom: 24rpx;
+        height: 200rpx;
+        border-radius: 10px;
+    }
+    .name {
+        margin: 5px 0;
     }
     .user-name-time {
-        padding-top: 24rpx;
+        width: 100%;
         .time {
-            font-size: 24rpx;
-            margin-top: 16rpx;
+            width: 100%;
+            font-size: 11px;
             justify-content: space-between;
         }
     }
 }
-.video-box /deep/ .video {
-    width: 100%;
-    height: 100%;
-}
-.video-box /deep/ .video-view {
-    width: 100% !important;
-    height: 100% !important;
+.video-box:nth-child(2n) {
+    margin-right: 0;
 }
 </style>

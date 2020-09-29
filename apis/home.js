@@ -31,4 +31,9 @@ export default {
         let res = await httpRequest('/toplist', 'GET')
         return res
     },
+    // 每日推荐
+    getEveryDay: async () => {
+        let res = await httpRequest('/recommend/songs', 'GET')
+        return res
+    },
 }

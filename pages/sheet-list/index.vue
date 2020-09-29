@@ -1,21 +1,5 @@
 <template>
     <view class="sheet-list">
-        <query-header
-            :title="title"
-            color="#fff"
-            :image="playData.coverImgUrl"
-            :opacity="opacity"
-        >
-            <template #rightButton>
-                <view class="button-action">
-                    <star-icon
-                        name="plus"
-                        size="40"
-                        :style="{ color: '#fff' }"
-                    />
-                </view>
-            </template>
-        </query-header>
         <view class="sheet-top flex-center">
             <star-blur
                 class="sheet-bg"
@@ -27,7 +11,7 @@
                 }"
             />
             <view class="left-img">
-                <image :src="playData.coverImgUrl" />
+                <image mode="aspectFill" lazy-load :src="playData.coverImgUrl" />
             </view>
             <view class="right-info">
                 <view class="right-info__name text-towline">{{
@@ -38,7 +22,17 @@
                 }}</view>
             </view>
         </view>
-        <scroll-view scroll-y class="sheet-box">
+        <view class="sheet-box">
+            <view class="sheet-plus">
+                <view class="button-color button-action plus-button">
+                    <star-icon
+                        name="folder-open"
+                        size="30"
+                        :style="{ marginRight: '4px' }"
+                    />
+                    收藏歌单
+                </view>
+            </view>
             <star-song-item
                 v-for="(item, index) of listData"
                 :key="index"
@@ -51,7 +45,7 @@
                 </template>
             </star-song-item>
             <star-loading v-show="!loadingSuccess" />
-        </scroll-view>
+        </view>
     </view>
 </template>
 <script>
@@ -75,15 +69,13 @@ export default {
             playData: {},
             listData: [],
             loadingSuccess: true,
-			opacity: 0,
-			title: '歌单'
         }
     },
     async onLoad(option) {
-        console.log('option', option)
         this.id = option.id
         let res = await apis.sheetDetail({ id: this.id })
         this.playData = res.playlist
+        uni.setNavigationBarTitle({ title: this.playData.name })
         let taskIds = this.playData.trackIds.map((ele) => {
             return ele.id
         })
@@ -102,17 +94,7 @@ export default {
             }
         })
         this.listData = singleData
-        console.log(this.loadingSuccess)
         this.loadingSuccess = true
-    },
-    onPageScroll(detail) {
-        if (detail.scrollTop > 180) {
-            this.opacity = 1
-			this.title = this.playData.name
-        } else {
-            this.opacity = 0
-			this.title =  '歌单'
-        }
     },
 }
 </script>
@@ -122,7 +104,7 @@ export default {
     position: relative;
     .sheet-top {
         width: 100%;
-        height: 240px;
+        height: 280px;
         position: relative;
         padding: 0 60rpx;
         box-sizing: border-box;
@@ -157,17 +139,28 @@ export default {
         }
     }
     .sheet-box {
-        box-sizing: border-box;
         transform: translateY(-24rpx);
         padding: 24rpx 24rpx 0;
         border-radius: 30rpx 30rpx 0 0;
         background: #fff;
     }
-}
-.button-action {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .sheet-plus {
+        height: 70rpx;
+        width: 100%;
+        display: flex;
+        margin-bottom: 10px;
+        align-items: center;
+        justify-content: flex-end;
+        .plus-button {
+            overflow: hidden;
+            border-radius: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70rpx;
+            padding: 0 30rpx;
+            color: #fff;
+        }
+    }
 }
 </style>

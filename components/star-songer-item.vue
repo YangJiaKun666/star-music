@@ -4,7 +4,7 @@
         @click="goSongerDetail(item.id)"
     >
         <view class="songer-img">
-            <image :src="item.img1v1Url" />
+            <image mode="aspectFill" lazy-load :src="item.img1v1Url" />
         </view>
         <view class="songer-name text-oneline">{{ item.name }}</view>
     </view>

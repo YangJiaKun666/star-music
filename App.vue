@@ -7,13 +7,12 @@ export default {
         //设置全局状态栏高度
         uni.getSystemInfo({
             success: (e) => {
-                // this.compareVersion(e.SDKVersion, '2.5.0')
                 let statusBar = 0
                 let customBar = 0
-
+                let pageHeight = e.safeArea.height
                 // #ifdef MP
                 statusBar = e.statusBarHeight
-                customBar = e.statusBarHeight + 45
+                customBar = e.statusBarHeight + 50
                 if (e.platform === 'android') {
                     this.$store.commit('SET_SYSTEM_IOSANDROID', false)
                     customBar = e.statusBarHeight + 50
@@ -33,14 +32,13 @@ export default {
                 // #endif
 
                 // #ifdef APP-PLUS
-                console.log('app-plus', e)
                 statusBar = e.statusBarHeight
-                customBar = e.statusBarHeight + 45
+                customBar = e.statusBarHeight + 50
                 // #endif
 
                 // #ifdef H5
                 statusBar = 0
-                customBar = e.statusBarHeight + 45
+                customBar = e.statusBarHeight + 50
                 // #endif
                 this.$store.commit('getSystemInfo', {
                     statusBar,
@@ -53,7 +51,11 @@ export default {
     },
     // 当引用显示时调用
     onShow: function () {
-        console.log('App Show')
+        uni.onTabBarMidButtonTap(()=>{
+            uni.navigateTo({
+                url: '/pages/search/index'
+            })
+        })
     },
     // 当引用隐藏时调用
     onHide: function () {

@@ -63,7 +63,7 @@ export default {
                         ...loginRes.profile,
                     })
                     setTimeout(() => {
-                        uni.redirectTo({
+                        uni.switchTab({
                             url: '/pages/home/index',
                         })
                     }, 1500)

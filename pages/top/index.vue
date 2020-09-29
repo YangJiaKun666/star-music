@@ -37,7 +37,7 @@ export default {
             }
         },
     },
-    async onShow() {
+    async onLoad() {
         let res = await apis.getTopList()
         this.dataList = res.list
         this.dataList = res.list.map((ele) => {

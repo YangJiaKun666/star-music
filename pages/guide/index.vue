@@ -12,7 +12,7 @@
                     logoShow && 'logo-transition',
                 ]"
             >
-                <image class="login-logo" src="@/static/images/logo.png" />
+                <image mode="aspectFill" lazy-load class="login-logo" src="@/static/images/logo.png" />
                 <text>welcome to star music</text>
             </view>
         </transition>

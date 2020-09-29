@@ -3,7 +3,7 @@
         <view v-if="isLodingSuccess">
             <!-- 顶部用户信息 -->
             <view class="top-userinfo flex-center">
-                <image lazy-load class="avatar" :src="userInfo.avatarUrl" />
+                <image mode="aspectFill" lazy-load class="avatar" :src="userInfo.avatarUrl" />
                 <view class="info">
                     <view class="name text-oneline action-color">{{
                         userInfo.nickname
@@ -17,19 +17,15 @@
             <!-- 中间按钮 -->
             <view class="center-button flex-center">
                 <view class="button-box">
-                    <star-icon name="play" size="40" class="action-color" />
+                    <star-icon name="play" size="40" class="check-color" />
                     <view class="button-name">最近播放</view>
                 </view>
                 <view class="button-box">
-                    <star-icon name="music" size="40" class="action-color" />
+                    <star-icon name="music" size="40" class="check-color" />
                     <view class="button-name">我的关注</view>
                 </view>
                 <view class="button-box">
-                    <star-icon
-                        name="heartbeat"
-                        size="40"
-                        class="action-color"
-                    />
+                    <star-icon name="heartbeat" size="40" class="check-color" />
                     <view class="button-name">收藏和赞</view>
                 </view>
             </view>
@@ -40,8 +36,9 @@
                     class="sheet-item flex-center"
                     v-for="(item, index) of mySheet"
                     :key="index"
+                    @click="goSheetDetail(item.id)"
                 >
-                    <image lazy-load class="item-img" :src="item.coverImgUrl" />
+                    <image mode="aspectFill" lazy-load class="item-img" :src="item.coverImgUrl" />
                     <view class="item-info">
                         <view class="info-name text-oneline action-color">
                             {{ item.name }}
@@ -59,8 +56,9 @@
                     class="sheet-item flex-center"
                     v-for="(item, index) of recomSheet"
                     :key="index"
+                    @click="goSheetDetail(item.id)"
                 >
-                    <image lazy-load class="item-img" :src="item.coverImgUrl" />
+                    <image mode="aspectFill" lazy-load class="item-img" :src="item.coverImgUrl" />
                     <view class="item-info">
                         <view class="info-name text-oneline action-color">
                             {{ item.name }}
@@ -108,7 +106,7 @@ export default {
             }
         },
     },
-    async onShow() {
+    async onLoad() {
         let uid = this.$store.state.userInfo.userId
         let userInfoRes = await apis.getUserInfo({ uid })
         this.level = userInfoRes.level
@@ -121,6 +119,13 @@ export default {
                 this.mySheet.push(ele)
             }
         })
+    },
+    methods: {
+        goSheetDetail(id) {
+            uni.navigateTo({
+                url: '/pages/sheet-list/index?id=' + id,
+            })
+        },
     },
 }
 </script>

@@ -19,9 +19,28 @@
             }
         },
         {
+            "path": "pages/everyday/index",
+            "style": {
+                "navigationBarTitleText": "每日推荐",
+                "transparentTitle": "auto"
+            }
+        },
+        {
+            "path": "pages/sheet-info/index",
+            "style": {
+                "navigationBarTitleText": "歌单广场"
+            }
+        },
+        {
             "path": "pages/top/index",
             "style": {
                 "navigationBarTitleText": "排行榜"
+            }
+        },
+        {
+            "path": "pages/videos/index",
+            "style": {
+                "navigationBarTitleText": "视频"
             }
         },
         {
@@ -33,7 +52,14 @@
         {
             "path": "pages/search/index",
             "style": {
-                "navigationStyle": "custom"
+                "titleNView": {
+                    "searchInput": {
+                        "autoFocus": true,
+                        "backgroundColor": "#F5F5F5",
+                        "borderRadius": "20px",
+                        "placeholder": "搜索关键词/歌手/歌词"
+                    }
+                }
             }
         },
         {
@@ -54,7 +80,8 @@
         "navigationBarBackgroundColor": "#FFFFFF",
         "app-plus": {
             "animationType": "zoom-fade-out",
-            "animationDuration": 300
+            "animationDuration": 300,
+            "scrollIndicator": "none"
         }
     },
     "tabBar": {
@@ -63,6 +90,7 @@
         "selectedColor": "#d81e06",
         "borderStyle": "white",
         "fontSize": "10px",
+        "height": "50px",
         "list": [
             {
                 "pagePath": "pages/home/index",

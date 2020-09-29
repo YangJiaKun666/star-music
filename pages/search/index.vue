@@ -1,28 +1,5 @@
 <template>
     <view class="search-box">
-        <query-header showSecurity background="#fff">
-            <template #centerContent>
-                <input
-                    class="search-input"
-                    :value="searchValue"
-                    @input="onInput"
-                    @focus="isSearch = false"
-                    @confirm="goSearch"
-                    :placeholder="defaultValue"
-                    type="text"
-                />
-            </template>
-            <template #rightButton>
-                <view class="clear-btn">
-                    <view
-                        class="clear-btn-icon button-action"
-                        @click="clearValue"
-                        v-show="searchValue != ''"
-                        >✕</view
-                    >
-                </view>
-            </template>
-        </query-header>
         <search-before v-if="!isSearch" @handlerClick="handlerClick" />
         <searched :searchValue="searchValue" v-else />
     </view>
@@ -43,12 +20,21 @@ export default {
             searchValue: '',
             defaultValue: '',
             isSearch: false,
+            searchView: null,
         }
     },
     async onLoad() {
+        this.searchView = this.$mp.page.$getAppWebview()
         // 默认搜索
         let defaultRes = await apis.defaultSearch()
-        this.defaultValue = defaultRes.data.showKeyword
+        // 动态设置原生app的导航栏搜索占位符
+        this.searchView.setStyle({
+            titleNView: {
+                searchInput: {
+                    placeholder: defaultRes.data.showKeyword,
+                },
+            },
+        })
     },
     onBackPress() {
         if (this.isSearch) {
@@ -57,16 +43,27 @@ export default {
             return true
         }
     },
+    // 原生输入框内容发生变化时
+    onNavigationBarSearchInputChanged(event) {
+        if (event.text === '') {
+            this.clearValue()
+        }
+    },
+    // 原生输入框点击软键盘完成时
+    onNavigationBarSearchInputConfirmed(event) {
+        this.searchValue = event.text
+        // 原生输入框失去焦点
+        this.searchView.setTitleNViewSearchInputFocus(false)
+        this.goSearch()
+    },
     methods: {
-        onInput(event) {
-            this.searchValue = event.target.value
-        },
         handlerClick(key) {
             this.searchValue = key
             this.goSearch()
         },
-        goSearch(event) {
+        goSearch() {
             if (this.searchValue === '') this.searchValue = this.defaultValue
+            this.searchView.setTitleNViewSearchInputText(this.searchValue)
             this.$store.commit('setHistory', this.searchValue)
             this.isSearch = true
         },

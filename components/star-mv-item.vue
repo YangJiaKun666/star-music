@@ -1,7 +1,7 @@
 <template>
     <view class="mv-box flex-center" @click="goMvDetail(item.id)">
         <view class="mv-img">
-            <image lazy-load :src="item.cover" />
+            <image mode="aspectFill" lazy-load :src="item.cover" />
             <view class="play-count">
                 <star-icon
                     :style="{ marginRight: '8rpx' }"

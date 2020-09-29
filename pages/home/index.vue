@@ -17,10 +17,10 @@
                     />
                 </swiper-item>
             </swiper>
-            <!-- 每日推荐，歌单，歌手 -->
+            <!-- 每日推荐，歌单，歌手，MV -->
             <view class="find-tags flex-center">
-                <view class="tags-box">
-                    <view class="tags-icon">
+                <view class="tags-box" @click="toEveryDay">
+                    <view class="tags-icon button-color">
                         <star-icon
                             name="eercast"
                             size="42"
@@ -29,8 +29,8 @@
                     </view>
                     <view class="tags-name">每日推荐</view>
                 </view>
-                <view class="tags-box">
-                    <view class="tags-icon">
+                <view class="tags-box" @click="toSheetInfo">
+                    <view class="tags-icon button-color">
                         <star-icon
                             name="file-text"
                             size="38"
@@ -40,7 +40,7 @@
                     <view class="tags-name">歌单</view>
                 </view>
                 <view class="tags-box">
-                    <view class="tags-icon">
+                    <view class="tags-icon button-color">
                         <star-icon
                             name="youtube-play"
                             size="42"
@@ -50,7 +50,7 @@
                     <view class="tags-name">MV</view>
                 </view>
                 <view class="tags-box">
-                    <view class="tags-icon">
+                    <view class="tags-icon button-color">
                         <star-icon
                             name="microphone"
                             size="42"
@@ -76,7 +76,6 @@
                     v-for="(item, index) of songData"
                     :item="item"
                     :key="index"
-                    @click-item="clickItem"
                 />
             </view>
         </view>
@@ -114,7 +113,7 @@ export default {
             songData: null,
         }
     },
-    async onShow() {
+    async onLoad() {
         // 获取轮播图
         let bannerRes = await apis.getFindBannerData({ type: 1 })
         this.bannerData = bannerRes.banners
@@ -129,9 +128,16 @@ export default {
         selectDetail(item) {
             console.log(item)
         },
-        clickItem(id) {
+        // 每日推荐
+        toEveryDay() {
             uni.navigateTo({
-                url: `/pages/play/index?id=${id}`,
+                url: '/pages/everyday/index',
+            })
+        },
+        // 歌单
+        toSheetInfo() {
+            uni.navigateTo({
+                url: '/pages/sheet-info/index',
             })
         },
     },
@@ -176,7 +182,6 @@ export default {
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            background: #464646;
         }
         .tags-name {
             font-size: 20rpx;

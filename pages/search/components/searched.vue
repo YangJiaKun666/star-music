@@ -5,7 +5,7 @@
                 :class="[
                     'button-action',
                     'tab',
-                    currentKey === index && 'action-color',
+                    currentKey === index && 'check-color',
                 ]"
                 v-for="(item, index) of tabs"
                 :key="index"
@@ -13,7 +13,7 @@
                 >{{ item.label }}</view
             >
             <view
-                class="check-box"
+                class="check-box button-color"
                 :style="{ transform: `translateX(${currentKey * 100}%)` }"
             ></view>
         </view>
@@ -109,7 +109,6 @@ export default {
             width: 25%;
             transition-duration: 300ms;
             border-radius: 20rpx;
-            background: #000;
         }
         .action-color {
             font-weight: bold;

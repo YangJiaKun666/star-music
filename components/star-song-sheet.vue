@@ -21,7 +21,11 @@
             :style="{ width: boxWidth + 'px', height: boxWidth + 'px' }"
             class="sheet-img"
         >
-            <image lazy-load :src="item.picUrl" />
+            <image
+                mode="aspectFill"
+                lazy-load
+                :src="item.picUrl || item.coverImgUrl"
+            />
         </view>
         <!-- 标题 -->
         <view class="sheet-title text-towline">
@@ -49,7 +53,7 @@ export default {
     methods: {
         goSheetDetail(id) {
             uni.navigateTo({
-                url: '/pages/sheet-list/index?id=' + id
+                url: '/pages/sheet-list/index?id=' + id,
             })
         },
         getPlayCount(number) {

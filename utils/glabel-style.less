@@ -1,3 +1,8 @@
+body {
+    font-size: 28rpx;
+    background: #fff;
+    color: #464646;
+}
 // 超出一行显示省略号
 .text-oneline {
     text-overflow: ellipsis;
@@ -13,38 +18,12 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
-// 主题函数
-.theme (@background,@textColor,@actionColor,@rgba) {
-    background: @background;
-    color: @textColor;
-    .action-color {
-        color: @actionColor;
-    }
-    .border-line {
-        border: 2rpx solid @rgba;
-    }
-    .user-name-time {
-        border-top: 2rpx solid @rgba;
-    }
-    .video-hr {
-        height: 10rpx;
-        width: 100%;
-        margin-top: 24rpx;
-        background: @rgba;
-    }
-    .video-box:last-child .video-hr {
-        background: @background;
-    }
+// 全局选中和按钮颜色
+.check-color {
+    color: #d81e06;
 }
-// 深色主题
-// body {
-//     font-size: 28rpx;
-//     .theme(#464646, #eaeaea, #fff, rgba(225,225,225,0.2));
-// }
-// 浅色主题
-body {
-    font-size: 28rpx;
-    .theme(#fff, #464646, #000, rgba(0,0,0,0.2));
+.button-color {
+    background: #d81e06;
 }
 // flex
 .flex-center {

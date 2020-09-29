@@ -1,10 +1,10 @@
 <template>
     <view
         class="song-item flex-center button-action"
-        @click="$emit('click-item', item.id)"
+        @click="clickItem(item.id)"
     >
         <view class="item-image" v-if="!item.hideImg">
-            <image lazy-load :src="item.picUrl" />
+            <image mode="aspectFill" lazy-load :src="item.picUrl" />
         </view>
         <view
             class="item-info"
@@ -53,6 +53,13 @@ export default {
     },
     components: {
         starIcon,
+    },
+    methods: {
+        clickItem(id) {
+            uni.navigateTo({
+                url: `/pages/play/index?id=${id}`,
+            })
+        },
     },
 }
 </script>

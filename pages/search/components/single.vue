@@ -4,7 +4,6 @@
             v-for="(item, index) of singleData"
             :key="index"
             :item="item"
-            @click-item="clickItem"
         >
             <template #rightIcon>
                 <view @click.stop class="check-box">
@@ -48,17 +47,6 @@ export default {
         },
     },
     methods: {
-        clickItem(id) {
-            if (this.isEdit) {
-                let index = this.singleData.findIndex((ele) => ele.id === id)
-                this.singleData[index].isChecked = !this.singleData[index]
-                    .isChecked
-            } else {
-                uni.navigateTo({
-                    url: `/pages/play/index?id=${id}`,
-                })
-            }
-        },
         onCheckAll() {
             if (this.isAll) {
                 for (const i of this.singleData) {
